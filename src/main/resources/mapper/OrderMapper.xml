@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.app.mapper.OrderMapper">
+
+  <!--//获得当日的订单总数
+  int getOrderCount(String startTime,String endTime);-->
+  <select id="getOrderCount" resultType="int" >
+    select COUNT(*) as total from rest.order where to_days(time) = to_days(now())
+  </select>
+
+  <!--按日期获取当日的订单数-->
+  <!--select DATE_FORMAT(time,'%Y-%m-%d') as days,count(*) count from `order` group by days;
+-->
+  <!--//增加订单
+  void addToDayOrder(Order order);-->
+  <insert id="addToDayOrder" parameterType="Order" keyColumn="id" useGeneratedKeys="true">
+    INSERT INTO rest.order
+    (openId,
+    sumMoney,
+    cupNumber,
+    cartList,
+    time,
+    orderId,
+    cathNumber,
+    model,
+    appointTime,
+    status,
+    disTime,
+    cutMoney,
+    packages,
+    cutText,
+    note)
+    VALUES (
+    #{openId},
+    #{sumMoney},
+    #{cupNumber},
+    #{cartList},
+    #{time},
+    #{orderId},
+    #{cathNumber},
+    #{model},
+    #{appointTime},
+    #{status},
+    #{disTime},
+    #{cutMoney},
+    #{packages},
+    #{cutText},
+    #{note}
+    )
+  </insert>
+
+  <!-- //查询我的订单详情
+  MyOrderDetailVO getMyOrderDetial-->
+  <select id="getMyOrderDetial" resultType="Order">
+    SELECT * FROM rest.order WHERE openId = #{openid} AND orderId = #{orderId}
+  </select>
+
+  <!--获取我的订单列表 -->
+  <select id="getMyOrderList" resultType="com.myweb.app.VO.MyOrderListVO">
+    SELECT orderId,sumMoney,cupNumber,cartList,appointTime,time from rest.order
+    WHERE openId = #{openid} AND model = #{model} order by id desc
+  </select>
+
+
+
+</mapper>

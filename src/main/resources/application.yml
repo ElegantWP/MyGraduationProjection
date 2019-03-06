@@ -1,0 +1,7 @@
+mybatis:
+#mybatis 配置别名信息
+  type-aliases-package: com.myweb.app.bean
+#mapper文件的位置
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    cache-enabled: true
