@@ -2,17 +2,22 @@ package com.myweb.app;
 
 import com.myweb.app.VO.MyOrderDetailVO;
 import com.myweb.app.VO.MyOrderListVO;
+import com.myweb.app.bean.MyCut;
+import com.myweb.app.bean.MyReductionList;
 import com.myweb.app.bean.Order;
+import com.myweb.app.bean.Reduction;
 import com.myweb.app.bean.Shoptime;
 import com.myweb.app.bean.User;
 import com.myweb.app.config.WeChatConfig;
 import com.myweb.app.mapper.OrderMapper;
+import com.myweb.app.mapper.ReductionMapper;
 import com.myweb.app.mapper.ShoptimeMapper;
 import com.myweb.app.mapper.WeChatUserMapper;
 import com.myweb.app.service.BuyerOrderService;
 import com.myweb.app.utils.WxPayOrdrIDUtil;
 import java.util.List;
 import javax.sql.DataSource;
+import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +46,9 @@ public class GraduationProjectApplicationTests {
   @Autowired
   private BuyerOrderService buyerOrderService;
 
+  @Autowired
+  private ReductionMapper reductionMapper;
+
 	@Test
 	public void contextLoads() {
 //	  配置druid数据源成功  运行显示配置
@@ -68,6 +76,7 @@ public class GraduationProjectApplicationTests {
     System.out.println(shoptime.toString());
   }
   //测试订单编号的唯一性
+  //订单编号的生成策略 满足高并发量(每秒的并发量达到2000) 已经不可猜测性
   @Test
   public void testOrderId(){
     String res = WxPayOrdrIDUtil
@@ -103,6 +112,21 @@ public class GraduationProjectApplicationTests {
     List<MyOrderListVO> list = orderMapper
         .getMyOrderList("osoJK5J0DQhwKgRgbRdBYQlUbpjA", 0);
     System.out.println(list);
+  }
+
+  //测试优惠券的情况
+  @Test
+  public void testReduction(){
+    List<Reduction> list = reductionMapper.getUserCanUseReductionList();
+    System.out.println(list);
+  }
+
+  @Test
+  public void testMyReductionList(){
+    List<MyReductionList> list = reductionMapper
+        .getMyReductonList("osoJK5J0DQhwKgRgbRdBYQlUbpjA");
+    System.out.println(list);
+
   }
 
 }

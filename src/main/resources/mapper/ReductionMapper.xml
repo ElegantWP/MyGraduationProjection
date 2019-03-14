@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myweb.app.mapper.ReductionMapper">
+
+  <!--//获取用户可以获得的优惠券列表
+  List<Reduction> getUserCanUseReductionList(String openid);-->
+  <select id="getUserCanUseReductionList"  resultType="Reduction">
+    SELECT * FROM reduction WHERE status = 1 ORDER BY reduction.id DESC
+  </select>
+
+  <!--//查询用户是否领取过优惠券
+  List<MyCut> isGetCut(@Param("openid") String openid, @Param("id") Integer id);-->
+
+  <select id="isGetCut" resultType="MyCut">
+    SELECT * FROM mycut where reduction = #{id} AND openid = #{openid}
+  </select>
+
+  <!--//想MyCut表中写入数据
+  void getCut(MyCut myCut);-->
+  <insert id="getCut" parameterType="MyCut" useGeneratedKeys="true" keyColumn="id">
+    INSERT INTO mycut(
+    openid,
+    reduction,
+    status,
+    getTime )
+    VALUES (
+    #{openid},
+    #{reduction},
+    #{status},
+    #{getTime}
+    )
+  </insert>
+
+  <!-- //获取我的所有优惠券的列表集合
+  List<MyReductionList> getMyReductonList(@Param("openid") String openid);-->
+  <resultMap id="MyReductionList" type="MyReductionList">
+    <id column="id" property="id"/>
+    <result column="openid" property="openid" />
+    <result column="reduction" property="reduction" />
+    <result column="status" property="status" />
+    <result column="getTime" property="getTime" />
+    <result column="useTime" property="useTime" />
+    <association property="detial" javaType="com.myweb.app.bean.Reduction">
+      <result column="reduction" property="id" />
+      <result column="type" property="type" />
+      <result column="typeDes" property="typeDes" />
+      <result column="rule" property="rule" />
+      <result column="cut" property="cut" />
+      <result column="startDate" property="startDate" />
+      <result column="endDate" property="endDate" />
+      <result column="status" property="status" />
+      <result column="img" property="img" />
+    </association>
+  </resultMap>
+  <select id="getMyReductonList" resultMap="MyReductionList" >
+    SELECT * FROM mycut,reduction WHERE mycut.reduction = reduction.id AND openid = #{openid}
+  </select>
+
+  <!--//用户使用优惠间 更新字段的状态的值
+  void useCut(@Param("id") Integer d,@Param("time")Date date);-->
+  <update id="useCut" >
+    UPDATE mycut SET status = 1 ,useTime =#{time}
+    WHERE mycut.id=#{id}
+  </update>
+</mapper>
