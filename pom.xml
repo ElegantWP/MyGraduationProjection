@@ -16,6 +16,9 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<!--布局功能的支持程序thymeleaf3主程序layout2以上版本-->
+		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		<thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
 	</properties>
 
 	<dependencies>
@@ -84,6 +87,16 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<!--引入thymeleaf-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.21</version>
 		</dependency>
 
   </dependencies>
