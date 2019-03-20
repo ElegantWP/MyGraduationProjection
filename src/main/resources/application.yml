@@ -5,3 +5,10 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     cache-enabled: true
+
+#七牛云图片服务器配置
+qiniu:
+  accessKey: AH3NOVDVZ0YbHLAi8MYsEmMWzyRMsiE_P77dd4C_
+  secretKey: v-OfmPok9loun7LGbanfnMKDJgys8-_w3r934Utc
+  bucket: elegantwp
+  path: http://pnxt6img4.bkt.clouddn.com
