@@ -9,6 +9,7 @@ import com.myweb.app.bean.Reduction;
 import com.myweb.app.bean.Shoptime;
 import com.myweb.app.bean.User;
 import com.myweb.app.config.WeChatConfig;
+import com.myweb.app.mapper.AdminMapper;
 import com.myweb.app.mapper.OrderMapper;
 import com.myweb.app.mapper.ReductionMapper;
 import com.myweb.app.mapper.ShoptimeMapper;
@@ -48,6 +49,9 @@ public class GraduationProjectApplicationTests {
 
   @Autowired
   private ReductionMapper reductionMapper;
+
+  @Autowired
+  private AdminMapper adminMapper;
 
 	@Test
 	public void contextLoads() {
@@ -127,6 +131,12 @@ public class GraduationProjectApplicationTests {
         .getMyReductonList("osoJK5J0DQhwKgRgbRdBYQlUbpjA");
     System.out.println(list);
 
+  }
+
+  @Test
+  public void testValidateAdminLogin(){
+    int res = adminMapper.validateAdminLogin("admin", "adin");
+    System.out.println(res);
   }
 
 }

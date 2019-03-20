@@ -29,6 +29,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -38,6 +40,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
+
+    //添加视图映射器
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("login");
+        registry.addViewController("/adminIndex.html").setViewName("index");
+    }
+
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+      //拦截登录请求  SpringBoot已经做好了静态资源映射
+      registry.addInterceptor(new LoginHandlerInterceptor()).
+          addPathPatterns("/**").excludePathPatterns("/","/admin/login");
+    }
 
 
     //使用阿里 FastJson 作为JSON MessageConverter
@@ -88,6 +105,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
         });
     }
+
 
     //解决跨域问题
     @Override
