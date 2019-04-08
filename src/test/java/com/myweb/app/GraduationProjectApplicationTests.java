@@ -2,12 +2,12 @@ package com.myweb.app;
 
 import com.myweb.app.VO.MyOrderDetailVO;
 import com.myweb.app.VO.MyOrderListVO;
-import com.myweb.app.bean.MyCut;
 import com.myweb.app.bean.MyReductionList;
 import com.myweb.app.bean.Order;
 import com.myweb.app.bean.Reduction;
 import com.myweb.app.bean.Shoptime;
 import com.myweb.app.bean.User;
+import com.myweb.app.config.QiniuConfig;
 import com.myweb.app.config.WeChatConfig;
 import com.myweb.app.mapper.AdminMapper;
 import com.myweb.app.mapper.OrderMapper;
@@ -18,12 +18,12 @@ import com.myweb.app.service.BuyerOrderService;
 import com.myweb.app.utils.WxPayOrdrIDUtil;
 import java.util.List;
 import javax.sql.DataSource;
-import org.apache.ibatis.annotations.Mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 //所有的单元测试
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -52,6 +52,9 @@ public class GraduationProjectApplicationTests {
 
   @Autowired
   private AdminMapper adminMapper;
+
+  @Autowired
+  private QiniuConfig qiniuConfig;
 
 	@Test
 	public void contextLoads() {
@@ -139,5 +142,16 @@ public class GraduationProjectApplicationTests {
     System.out.println(res);
   }
 
+  @Test
+  public void testQinconfig(){
+    List<Order> orderList = adminMapper.getOrderList();
+    System.out.println(orderList);
+  }
+  @Test
+  public void testNickName(){
+    String nickName = adminMapper
+        .getUserNameByOpenid("osoJK5J0DQhwKgRgbRdBYQlUbpjA");
+    System.out.println(nickName);
+  }
 }
 

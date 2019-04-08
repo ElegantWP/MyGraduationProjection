@@ -5,10 +5,17 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     cache-enabled: true
+    map-underscore-to-camel-case: true
 
 #七牛云图片服务器配置
 qiniu:
   accessKey: AH3NOVDVZ0YbHLAi8MYsEmMWzyRMsiE_P77dd4C_
   secretKey: v-OfmPok9loun7LGbanfnMKDJgys8-_w3r934Utc
   bucket: elegantwp
-  path: http://pnxt6img4.bkt.clouddn.com
+  path: http://itheimawang.cn
+#上传文件的大小的配置 M 为单位
+spring:
+  http:
+    multipart:
+      max-file-size: 10Mb
+      max-request-size: 100Mb

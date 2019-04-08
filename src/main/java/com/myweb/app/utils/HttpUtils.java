@@ -72,6 +72,7 @@ public class HttpUtils {
       String getUrl = url+"?";
       if (paramsMap != null) {
         for (Map.Entry<String, String> param : paramsMap.entrySet()) {
+          //代码不规范  String+
           getUrl += param.getKey() + "=" + URLEncoder.encode(param.getValue(), ENCODING)+"&";
         }
       }
@@ -93,7 +94,7 @@ public class HttpUtils {
     return responseText;
   }
   //post请求参数为json格式
-  public static String HttpPostWithJson(String url, String json) {
+  public static String httpPostWithJson(String url, String json) {
     String returnValue = "这是默认返回值，接口调用失败";
     CloseableHttpClient httpClient = HttpClients.createDefault();
     ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -111,7 +112,8 @@ public class HttpUtils {
       httpPost.setEntity(requestEntity);
 
       //第四步：发送HttpPost请求，获取返回值
-      returnValue = httpClient.execute(httpPost,responseHandler); //调接口获取返回值时，必须用此方法
+      //调接口获取返回值时，必须用此方法
+      returnValue = httpClient.execute(httpPost,responseHandler);
 
     }
     catch(Exception e)

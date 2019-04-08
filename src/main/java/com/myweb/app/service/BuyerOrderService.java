@@ -6,6 +6,7 @@ import com.myweb.app.DTO.CartListDTO;
 import com.myweb.app.VO.MyOrderDetailVO;
 import com.myweb.app.VO.MyOrderListVO;
 import com.myweb.app.bean.Order;
+import com.myweb.app.compoent.OrderInformWebSocket;
 import com.myweb.app.mapper.OrderMapper;
 import com.myweb.app.mapper.WeChatUserMapper;
 import com.myweb.app.utils.CathNumberUtil;
@@ -34,6 +35,9 @@ public class BuyerOrderService {
   @Autowired
   private OrderMapper orderMapper;
 
+  @Autowired
+  private OrderInformWebSocket orderInformWebSocket;
+
   //向订单表中写入数据 并且修改user表中的个人的消费金额
   @Transactional
   public Order addOrder(BuyerOrderDTO buyerOrderDTO,String openid){
@@ -46,6 +50,8 @@ public class BuyerOrderService {
     orderMapper.addToDayOrder(order);
     logger.info("订单写入成功");
     weChatUserMapper.updateResumeMoney(openid,order.getSumMoney());
+    //后端管理员页面通知 有新的订单消息 发送订单编号信息
+    orderInformWebSocket.sendMessage(order.getOrderId());
     logger.info("用户消费金额更新成功");
     return order;
   }

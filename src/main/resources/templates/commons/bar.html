@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--这是侧边栏-->
+<nav class="templatemo-left-nav" th:fragment="sidebar">
+  <ul>
+    <li><a href="#" th:href="@{/admin/getUserList}" class="active" th:class="${activeUri=='admin/getUserList'?'active':''}"><i class="fa fa-home fa-fw"></i>用户管理</a></li>
+    <li><a href="menuorfoods.html" th:href="@{/admin/getFoodList}" th:class="${activeUri=='admin/getFoodList'?'active':''}"><i class="fa fa-bar-chart fa-fw"></i>商品类目商品管理</a></li>
+    <li><a href="order.html" th:href="@{/admin/getOrderList}" th:class="${activeUri=='admin/getOrderList'?'active':''}" ><i class="fa fa-database fa-fw"></i>订单管理</a></li>
+    <li><a href="maps.html"><i class="fa fa-map-marker fa-fw"></i>优惠券发放管理</a></li>
+    <li><a href="manage-users.html"><i class="fa fa-users fa-fw"></i>图表数据显示</a></li>
+    <li><a href="preferences.html"><i class="fa fa-sliders fa-fw"></i>Preferences</a></li>
+    <li><a href="login.html"><i class="fa fa-eject fa-fw"></i>Sign Out</a></li>
+  </ul>
+</nav>
+
+</body>
+</html>

@@ -134,4 +134,24 @@ public class User{
   public void setPhone(String phone) {
     this.phone = phone;
   }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "id=" + id +
+        ", nickName='" + nickName + '\'' +
+        ", avatarUrl='" + avatarUrl + '\'' +
+        ", password='" + password + '\'' +
+        ", role=" + role +
+        ", root=" + root +
+        ", resum=" + resum +
+        ", province='" + province + '\'' +
+        ", gender=" + gender +
+        ", city='" + city + '\'' +
+        ", openId='" + openId + '\'' +
+        ", createTime=" + createTime +
+        ", lastLoginTime=" + lastLoginTime +
+        ", phone='" + phone + '\'' +
+        '}';
+  }
 }

@@ -41,7 +41,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
 
-    //添加视图映射器
+    /**
+     * 为项目添加视图映射器
+     * @param registry
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("login");
@@ -51,9 +54,9 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-      //拦截登录请求  SpringBoot已经做好了静态资源映射
-      registry.addInterceptor(new LoginHandlerInterceptor()).
-          addPathPatterns("/**").excludePathPatterns("/","/admin/login");
+//      //拦截登录请求  SpringBoot已经做好了静态资源映射  解决文件上传七牛云的问题 暂时去除prictice/upload
+//      registry.addInterceptor(new LoginHandlerInterceptor()).
+//          addPathPatterns("/**").excludePathPatterns("/","/admin/login","/qiniu");
     }
 
 
@@ -63,7 +66,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         FastJsonConfig config = new FastJsonConfig();
         config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);//保留空的字段
-        // 按需配置，更多参考FastJson文档哈
+        // 按需配置
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(Charset.forName("UTF-8"));
         converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));

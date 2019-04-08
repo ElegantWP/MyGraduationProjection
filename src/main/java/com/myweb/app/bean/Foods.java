@@ -1,6 +1,5 @@
 package com.myweb.app.bean;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import java.util.List;
 
 /**
@@ -19,7 +18,15 @@ public class Foods {
   private String desc;
   private List<Fooddetial> tem;
   private List<Fooddetial> size;
+  private Menu menu;
 
+  public Menu getMenu() {
+    return menu;
+  }
+
+  public void setMenu(Menu menu) {
+    this.menu = menu;
+  }
 
   public Integer getId() {
     return id;

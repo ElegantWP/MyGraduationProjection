@@ -66,11 +66,17 @@ public class ReductionController {
   //用户使用优惠券
   @GetMapping("/useCut")
   public ResponseMessage useCut(@RequestParam Integer id){
-    Preconditions.checkNotNull(id);
-    reductionService.useCut(id);
     ResponseMessage<Object> message = new ResponseMessage<>();
-    message.setCode(0);
-    message.setMsg("使用成功");
+    if (null == id){
+      logger.info("此用户当前没有可以使用的优惠券");
+    }else {
+      reductionService.useCut(id);
+      message.setCode(0);
+      message.setMsg("使用成功");
+      return message;
+    }
+    message.setCode(1);
+    message.setMsg("无可用优惠券");
     return message;
   }
 

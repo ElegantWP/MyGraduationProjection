@@ -88,7 +88,8 @@ public class BeanUtil {
           maps.put(key, null == value ? "" : value.toString());
           continue;
         }
-        if (type.getName().equals("java.util.Date")) {// 日期时间类型
+        // 日期时间类型
+        if (type.getName().equals("java.util.Date")) {
           // TODO 日期时间类型需要自定义格式
           maps.put(key, value.toString());
           continue;
