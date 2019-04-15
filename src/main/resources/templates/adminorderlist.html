@@ -60,6 +60,7 @@
           <td>优惠金额</td>
           <td>订单金额</td>
           <td>查看详情</td>
+          <td>完结订单</td>
         </tr>
         </thead>
         <tbody>
@@ -72,9 +73,9 @@
           <td th:text="${order.orderStatus} == 1? '正在制作':'订单完结'"></td>
           <td th:text="${order.cutMoney}"></td>
           <td th:text="${order.sumMoney}"></td>
-          <td><a href="" th:href="@{/admin/orderdetial/}+${order.orderId}" class="templatemo-link">查看详情</a></td>
+          <td><a href="" th:href="@{/admin/detial/}+${order.orderId}" class="templatemo-link">查看详情</a></td>
+          <td><a href="" th:href="@{/admin/order/status/}+${order.orderId}" class="templatemo-link" onClick="return confirm('确定完结订单吗?');" >完结订单</a></td>
         </tr>
-
         </tbody>
       </table>
     </div>

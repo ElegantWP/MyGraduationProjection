@@ -1,8 +1,11 @@
 package com.myweb.app.mapper;
 
+import com.myweb.app.VO.AdminChartOrderNumVO;
+import com.myweb.app.VO.AdminChartsVO;
 import com.myweb.app.bean.Foods;
 import com.myweb.app.bean.Menu;
 import com.myweb.app.bean.Order;
+import com.myweb.app.bean.Reduction;
 import com.myweb.app.bean.User;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -50,4 +53,77 @@ public interface AdminMapper {
    */
   List<Order> getOrderList();
 
+  /**
+   * 根据商品编号获取商品
+   * @param id 商品编号
+   * @return
+   */
+  Foods getFoodById(@Param("id") Integer id);
+
+  /**
+   * 管理员更新商品的图片信息
+   * @param foods
+   */
+  void updateFoodDetial(Foods foods);
+
+  /**
+   * 管理员根据编号删除商品
+   * @param id
+   */
+  void deleteFoodById(@Param("id") Integer id);
+
+  /**
+   * 管理员根据订单编号获取订单详情
+   * @param orderId 订单编号
+   */
+  Order getOrderDetialByOrderId(@Param("orderId") String orderId);
+
+  /**
+   * 更新订单状态 根据订单编号
+   * @param orderId 订单编号
+   */
+  void updateOrderStatus(@Param("orderId") String orderId);
+
+  /**
+   * 管理员获取所有的优惠券列表
+   * @return
+   */
+  List<Reduction> getAllReduction();
+
+  /**
+   * 管理员添加优惠券
+   * @param reduction
+   */
+  void addReduction(Reduction reduction);
+
+  /**
+   * 管理员删除过期无用的优惠券
+   * @param id 优惠券编号
+   */
+  void delReductionById(@Param("id") Integer id);
+
+  /**
+   * 通过编号获取优惠券编号
+   * @param id
+   * @return
+   */
+  Reduction getReductionById(@Param("id") Integer id);
+
+  /**
+   * 更新优惠券信息
+   * @param reduction
+   */
+  void updateReduction(Reduction reduction);
+
+  /**
+   * 管理员获取每日的订单金额
+   * @return VO页面对象
+   */
+  List<AdminChartsVO> getAdminCountsMsg();
+
+  /**
+   * 管理员获取每日订单的数量变化的折线图
+   * @return
+   */
+  List<AdminChartOrderNumVO> getAdminCountNumMsg();
 }

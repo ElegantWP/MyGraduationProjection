@@ -42,7 +42,7 @@
       <i class="fa fa-bars"></i>
     </div>
     <!--引入侧边栏-->
-    <div th:replace="commons/bar::sidebar(activeUri='admin/getOrderList')"></div>
+    <div th:replace="commons/bar::sidebar(activeUri='admin/reductionList')"></div>
   </div>
   <!-- Main content -->
   <!-- Main content -->
@@ -51,7 +51,7 @@
       <div class="row">
         <nav class="templatemo-top-nav col-lg-12 col-md-12">
           <ul class="text-uppercase">
-            <li><a href="#" th:href="@{/admin/getOrderList}">返回订单列表</a></li>
+            <li><a href="#" th:href="@{/admin/reductionList}">返回优惠券列表</a></li>
           </ul>
         </nav>
       </div>
@@ -59,53 +59,45 @@
 
     <div class="templatemo-content-container">
       <div class="templatemo-content-widget white-bg">
-        <h2 class="margin-bottom-10">订单详情</h2>
-        <!--订单详情的一些信息-->
-        <div class="templatemo-content-widget white-bg col-2">
-          <i class="fa fa-times"></i>
-          <div class="media margin-bottom-30">
-            <div class="media-body">
-              <h2 class="media-heading text-uppercase blue-text" th:text="${detial.model} == '1'?'预约订单时间：':'到店支付'"></h2>
-              <h3 th:text="${detial.appointTime}"></h3>
+        <h2 class="margin-bottom-10">优惠券详情</h2>
+        <form th:action="@{/admin/addReduction}" class="templatemo-login-form" method="post">
+          <div class="row form-group">
+            <div class="col-lg-6 col-md-6 form-group">
+              <label for="inputFirstName">优惠券达到此金额</label>
+              <input type="text" name="rule" class="form-control" id="inputFirstName" placeholder="优惠券达到此处金额">
+            </div>
+            <div class="col-lg-6 col-md-6 form-group">
+              <label for="inputLastName">优惠券优惠金额</label>
+              <input type="text" name="cut" class="form-control" id="inputLastName" placeholder="减免金额">
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead>
-              <tr>
-                <td><div class="circle pink-bg"></div></td>
-                <td>商品图片</td>
-                <td>商品名称</td>
-                <td>商品价格</td>
-                <td>购买数量</td>
-                <td>金额</td>
-              </tr>
-              </thead>
-              <tbody>
-              <tr th:each=" cart : ${detial.carts}">
-                <td><div class="circle green-bg"></div></td>
-                <td><img style="max-height: 132px;max-width: 132px;vertical-align:middle;" th:src="${cart.img}"></td>
-                <td th:text="${cart.name}"></td>
-                <td th:text="${cart.price}"></td>
-                <td th:text="${cart.number}"></td>
-                <td th:text="${cart.sum}"></td>
-              </tr>
-              </tbody>
-            </table>
-
-            <div class="col-lg-12 form-group">
-              <label class="control-label yellow-bg " for="inputNote" >订单note</label>
-              <textarea class="form-control" name="desc" th:text="${detial.note}" id="inputNote" rows="3"></textarea>
+          <div class="row form-group">
+            <div class="col-lg-6 col-md-6 form-group">
+              <label class="control-label templatemo-block">优惠券类型</label>
+              <select class="form-control" name="type">
+                <option value="1">全场满减</option>
+                <option value="2">单品减免</option>
+              </select>
             </div>
             <div class="col-lg-12 form-group">
-              <h3 style="display:inline;">取餐号码：</h3> <strong th:text="${detial.cathNumber}"></strong>
+              <label class="control-label" for="inputNote">优惠券简要描述</label>
+              <textarea class="form-control" name="typeDes" id="inputNote" rows="3"></textarea>
             </div>
             <div class="col-lg-12 form-group">
-              <h3 style="display:inline;">订单总金额：</h3> <strong th:text="${detial.sumMoney}"></strong>
+              <div style="float: left">
+                <label for="startDate">开始时间：</label>
+                <input id="startDate" name="startDate" type="date" th:value="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd')}"/></div>
+              <div style="float: right">
+                <label for="endDate">结束时间：</label>
+                <input id="endDate"  name="endDate" type="date" th:value="${#dates.format(new java.util.Date().getTime(), 'yyyy-MM-dd')}"/></div>
             </div>
 
           </div>
-        </div>
+          <div class="form-group text-right">
+            <button type="submit" class="templatemo-blue-button">Submit</button>
+            <button type="reset" class="templatemo-white-button">Reset</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -116,5 +108,9 @@
 <script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js" th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script> <!--  jQuery Migrate Plugin -->
 <script type="text/javascript" src="js/templatemo-script.js" th:src="@{/js/templatemo-script.js}"></script>      <!-- Templatemo Script -->
 
+<script type="text/javascript">
+
+
+</script>
 </body>
 </html>

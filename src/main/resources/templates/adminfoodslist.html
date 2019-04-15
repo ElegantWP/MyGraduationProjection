@@ -71,24 +71,31 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="food : ${foods}">
+            <tr th:each="food : ${pageInfo.list}">
               <td th:text="${food.id}">1.</td>
-              <td th:text="${food.menu.type}">John</td>
-              <td th:text="${food.name}">Smith</td>
-              <td th:text="${food.price}">@jS</td>
+              <td th:text="${food.menu.type}"></td>
+              <td th:text="${food.name}"></td>
+              <td th:text="${food.price}"></td>
               <td><img style="max-height: 132px;max-width: 132px;vertical-align:middle;" th:src="${food.img}"></td>
-              <td th:text="${food.enName}">@jS</td>
-              <td th:text="${food.status}==1 ? '库存充足':'库存紧张'">js@company.com</td>
-              <td><a href="" class="templatemo-edit-btn">Edit</a></td>
-              <td><a href="" class="templatemo-link">Delete</a></td>
+              <td th:text="${food.enName}"></td>
+              <td th:text="${food.status}==1 ? '库存充足':'库存紧张'"></td>
+              <td><a th:href="@{/admin/food/}+${food.id}" class="templatemo-edit-btn">Edit</a></td>
+              <td><a th:href="@{/admin/delete/}+${food.id}" class="templatemo-edit-btn deleteButton" onClick="return confirm('确定删除?');">Del</a></td>
             </tr>
             </tbody>
           </table>
+          <div class="pagination-wrap">
+            <ul class="pagination">
+              <li><a th:href="@{/admin/getFoodList(pageNo=1)}">首页</a></li>
+              <li><a th:href="@{/admin/getFoodList(pageNo=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">Prev</a></li>
+              <li><a th:href="@{/admin/getFoodList(pageNo=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">Next</a></li>
+              <li><a th:href="@{/admin/getFoodList(pageNo=${pageInfo.pages})}">尾页</a></li>
+            </ul>
+          </div>
+
         </div>
-
     </div>
     </div>
-
     
     <!-- JS -->
     <script type="text/javascript" src="js/jquery-1.11.2.min.js" th:src="@{/js/jquery-1.11.2.min.js}"></script>      <!-- jQuery -->

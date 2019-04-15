@@ -54,4 +54,148 @@
     SELECT  * FROM rest.order order by id desc
   </select>
 
+
+  <!-- /**
+   * 根据商品编号获取商品
+   * @param id 商品编号
+   * @return
+   */
+  Foods getFoodById(@Param("id") Integer id);-->
+  <select id="getFoodById" resultType="Foods">
+    SELECT * FROM foods WHERE id = #{id}
+  </select>
+  <!--/**
+   * 管理员更新商品的图片信息
+   * @param foods
+   */
+  void updateFoodDetial(Foods foods);-->
+  <update id="updateFoodDetial" parameterType="Foods">
+    UPDATE foods
+    <trim prefix="set" suffixOverrides=",">
+      <if test="type != null"> type = #{type},</if>
+      <if test="name != null"> name = #{name},</if>
+      <if test="price != null"> price = #{price},</if>
+      <if test="img != null"> img = #{img},</if>
+      <if test="num != null"> num = #{num}</if>
+      <if test="enName != null"> enName = #{enName},</if>
+      <if test="status != null"> status = #{status},</if>
+      <if test="desc != null"> foods.desc = #{desc},</if>
+      <if test="tem != null"> tem = #{tem},</if>
+      <if test="size != null"> size = #{size}</if>
+    </trim>
+    WHERE id = #{id}
+  </update>
+  <!--/**
+   * 管理员根据编号删除商品
+   * @param id
+   */
+  void deleteFoodById(@Param("id") Integer id);-->
+
+  <delete id="deleteFoodById" >
+    DELETE FROM foods WHERE id = #{id}
+  </delete>
+
+  <!--/**
+   * 管理员根据订单编号获取订单详情
+   */
+  Order getOrderDetialByOrderId(@Param("orderId") String orderId);-->
+  <select id="getOrderDetialByOrderId" resultType="Order">
+    SELECT * FROM rest.order WHERE orderId = #{orderId} limit 1
+  </select>
+  
+  <!--/**
+   * 更新订单状态 根据订单编号
+   * @param orderId 订单编号
+   */
+  void updateOrderStatus(String orderId);-->
+  <update id="updateOrderStatus" >
+    UPDATE rest.order SET order.status = 2
+    WHERE orderId = #{orderId}
+  </update>
+  <!--/**
+   * 管理员获取所有的优惠券列表
+   * @return
+   */
+  List<Reduction> getAllReduction();-->
+  <select id="getAllReduction" resultType="Reduction">
+    SELECT * FROM reduction
+  </select>
+  <!--/**
+   * 管理员添加优惠券
+   * @param reduction
+   */
+  void addReduction(Reduction reduction);-->
+  <insert id="addReduction" parameterType="Reduction" useGeneratedKeys="true" keyColumn="id">
+    INSERT INTO reduction(
+    type,
+    typeDes,
+    rule,
+    cut,
+    startDate,
+    endDate,
+    status
+    ) VALUES (
+    #{type},
+    #{typeDes},
+    #{rule},
+    #{cut},
+    #{startDate},
+    #{endDate},
+    #{status}
+    )
+  </insert>
+  <!--/**
+   * 管理员删除过期无用的优惠券
+   * @param id 优惠券编号
+   */
+  void delReductionById(@Param("id") Integer id);-->
+  <delete id="delReductionById" >
+    DELETE FROM reduction WHERE id = #{id}
+  </delete>
+  <!--/**
+   * 通过编号获取优惠券编号
+   * @param id
+   * @return
+   */
+  Reduction getReductionById(@Param("id") Integer id);-->
+  <select id="getReductionById" resultType="Reduction">
+    SELECT * FROM reduction WHERE id = #{id} limit 1
+  </select>
+  <!--/**
+   * 更新优惠券信息
+   * @param reduction
+   */
+  void updateReduction(Reduction reduction);-->
+  <update id="updateReduction" parameterType="Reduction">
+    UPDATE reduction
+    <trim prefix="set" suffixOverrides=",">
+      <if test="type != null"> type = #{type},</if>
+      <if test="typeDes != typeDes"> name = #{typeDes},</if>
+      <if test="rule != null"> rule = #{rule},</if>
+      <if test="cut != null"> cut = #{cut},</if>
+      <if test="startDate != null"> startDate = #{startDate},</if>
+      <if test="endDate != null"> endDate = #{endDate},</if>
+      <if test="status != null"> status = #{status},</if>
+      <if test="img != null"> img = #{img}</if>
+    </trim>
+    WHERE id = #{id}
+  </update>
+  <!--/**
+   * 管理员获取每日的订单金额
+   * @return VO页面对象
+   */
+  List<AdminChartsVO> getAdminCountsMsg();-->
+  <select id="getAdminCountsMsg" resultType="com.myweb.app.VO.AdminChartsVO">
+    select DATE_FORMAT(time,'%m-%d') as days,
+          SUM(sumMoney) as orderCurrentMoney from rest.order group by days
+  </select>
+  <!--/**
+   * 管理员获取每日订单的数量变化的折线图
+   * @return
+   */
+  List<AdminChartOrderNumVO> getAdminCountNumMsg();-->
+  <select id="getAdminCountNumMsg" resultType="com.myweb.app.VO.AdminChartOrderNumVO">
+    select DATE_FORMAT(time,'%m-%d') as days,
+          COUNT(*) as orderCurrentNum from rest.order group by days
+  </select>
 </mapper>

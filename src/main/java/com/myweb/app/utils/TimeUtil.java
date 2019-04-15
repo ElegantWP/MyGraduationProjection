@@ -1,5 +1,7 @@
 package com.myweb.app.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,6 +21,11 @@ public class TimeUtil {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd 23:59:59");
     String endTime = simpleDateFormat.format(date);
     return endTime;
+  }
+
+  public static Date getDateTimeByString(String date) throws ParseException {
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    return simpleDateFormat.parse(date);
   }
 
 }
