@@ -230,6 +230,11 @@ public class AdminController {
     return "adminorderdetial";
   }
 
+  /**
+   * 管理员更新订单状态
+   * @param id
+   * @return
+   */
   @GetMapping("/admin/order/status/{id}")
   public String updateOrderStatus(@PathVariable("id") String id){
     Preconditions.checkArgument(StringUtils.isNotEmpty(id));

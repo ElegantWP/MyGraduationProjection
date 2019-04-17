@@ -40,12 +40,13 @@ public class BuyerOrderService {
 
   //向订单表中写入数据 并且修改user表中的个人的消费金额
   @Transactional
-  public Order addOrder(BuyerOrderDTO buyerOrderDTO,String openid){
+  public Order addOrder(BuyerOrderDTO buyerOrderDTO,String openid,String formId){
     Order order = ConvertDomainUtils.convertObject(buyerOrderDTO, Order.class);
     order.setOpenId(openid);
     order.setCathNumber(CathNumberUtil.getCathNumber(orderMapper.getOrderCount()));
     order.setTime(new Date());
     order.setStatus(1);
+    order.setPackages(formId);
     order.setCartList(JSON.toJSON(buyerOrderDTO.getCartList()).toString());
     orderMapper.addToDayOrder(order);
     logger.info("订单写入成功");

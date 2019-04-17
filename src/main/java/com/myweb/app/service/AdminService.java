@@ -38,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -55,6 +56,9 @@ public class AdminService {
 
   @Autowired
   private FoodsMapper foodsMapper;
+
+  @Autowired
+  private WxminiPushMsgService wxminiPushMsgService;
 
   private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -263,8 +267,14 @@ public class AdminService {
    * 管理员根据订单编号完结订单状态
    * @param orderId
    */
+  @Transactional
   public void updateOrderStatus(String orderId){
     adminMapper.updateOrderStatus(orderId);
+    /**
+     * 获取订单详情信息  使得可以发送微信模板消息
+     */
+    Order order = adminMapper.getOrderDetialByOrderId(orderId);
+    wxminiPushMsgService.sendWxMsg(order);
   }
 
   /**

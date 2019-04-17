@@ -33,12 +33,15 @@ public class OrderController {
 
 
   @PostMapping("/addOrder")
-  public ResponseMessage addOrder(@RequestParam String openid,@RequestBody BuyerOrderDTO buyerOrderDTO){
+  public ResponseMessage addOrder(@RequestParam String openid,
+                                @RequestBody BuyerOrderDTO buyerOrderDTO,
+                                @RequestParam(name = "formId" ,required = false) String formId){
     Preconditions.checkNotNull(buyerOrderDTO);
     Preconditions.checkArgument(StringUtils.isNotEmpty(openid));
     logger.info(openid+"创建当前订单");
     logger.info(buyerOrderDTO.toString());
-    Order order = buyerOrderService.addOrder(buyerOrderDTO, openid);
+    logger.info(formId);
+    Order order = buyerOrderService.addOrder(buyerOrderDTO, openid,formId);
     OrderVO orderVO = new OrderVO();
     orderVO.setCathNumber(order.getCathNumber());
     orderVO.setCartList(buyerOrderDTO.getCartList());

@@ -1,6 +1,7 @@
 package com.myweb.app;
 
 import com.myweb.app.VO.AdminChartsVO;
+import com.myweb.app.VO.AdminOrderDetialVO;
 import com.myweb.app.VO.MyOrderDetailVO;
 import com.myweb.app.VO.MyOrderListVO;
 import com.myweb.app.bean.MyReductionList;
@@ -17,6 +18,7 @@ import com.myweb.app.mapper.ShoptimeMapper;
 import com.myweb.app.mapper.WeChatUserMapper;
 import com.myweb.app.service.AdminService;
 import com.myweb.app.service.BuyerOrderService;
+import com.myweb.app.service.WxminiPushMsgService;
 import com.myweb.app.utils.TimeUtil;
 import com.myweb.app.utils.WxPayOrdrIDUtil;
 import java.text.ParseException;
@@ -63,6 +65,9 @@ public class GraduationProjectApplicationTests {
 
   @Autowired
   private AdminService adminService;
+
+  @Autowired
+  private WxminiPushMsgService wxminiPushMsgService;
 
   @Test
   public void contextLoads() {
@@ -181,6 +186,12 @@ public class GraduationProjectApplicationTests {
   public void testCountMag(){
     List<AdminChartsVO> msg = adminService.getCountOrderMsg();
     System.out.println(msg);
+  }
+
+  @Test
+  public void testWxTemplateMsg(){
+    Order byOrderId = adminMapper.getOrderDetialByOrderId("0555414520518761");
+    wxminiPushMsgService.sendWxMsg(byOrderId);
   }
 
 }

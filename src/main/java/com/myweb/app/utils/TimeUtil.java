@@ -28,4 +28,9 @@ public class TimeUtil {
     return simpleDateFormat.parse(date);
   }
 
+  public static String getDateTimeByDate(Date date) throws ParseException {
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    return simpleDateFormat.format(date);
+  }
+
 }
