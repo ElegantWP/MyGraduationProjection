@@ -30,8 +30,7 @@ public class ReductionController {
   @GetMapping("/getUserCanUseReductionList")
   public ResponseMessage getUserCanUseReductionList(@RequestParam String openid){
     Preconditions.checkArgument(StringUtils.isNotEmpty(openid));
-    List<ReductionVO> userCanUseReductionList =
-        reductionService.getUserCanUseReductionList(openid);
+    List<ReductionVO> userCanUseReductionList = reductionService.getUserCanUseReductionList(openid);
     ResponseMessage<Object> message = new ResponseMessage<>();
     message.setCode(0);
     message.setMsg(userCanUseReductionList);

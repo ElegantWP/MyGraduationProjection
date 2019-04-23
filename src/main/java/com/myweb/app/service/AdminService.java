@@ -74,9 +74,9 @@ public class AdminService {
 
   /**
    * 将图片上传七牛云  并返回图片链接
-   * @param file
-   * @param key
-   * @return
+   * @param file 文件的流格式
+   * @param key  文件的文件名
+   * @return 图片存储的外链
    */
   public String uploadQNImg(FileInputStream file, String key) {
     // 构造一个带指定Zone对象的配置类   华东机房  配置空间所在的区域
@@ -101,7 +101,7 @@ public class AdminService {
         try {
           logger.error(r.bodyString());
         } catch (QiniuException ex2) {
-          logger.info("异常上传图片");
+          logger.info("[异常上传图片]:{}",ex2);
         }
       }
     } catch (Exception e) {
@@ -279,7 +279,7 @@ public class AdminService {
 
   /**
    * 管理员获取所有的优惠券列表
-   * @return
+   * @return 所有的优惠券信息
    */
   public List<Reduction> getAllReduction(){
     return adminMapper.getAllReduction();
@@ -287,7 +287,7 @@ public class AdminService {
 
   /**
    * 管理员添加优惠卷信息
-   * @param reductionDTO
+   * @param reductionDTO 优惠券的数据传输对象
    */
   public void addReductionMsg(ReductionDTO reductionDTO) throws ParseException {
     Reduction reduction = new Reduction();
